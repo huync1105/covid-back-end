@@ -12,13 +12,7 @@ router.get('/', async (req, res) => {
 // add user
 router.post('/', async (req, res) => {
   const user = new User({
-    taiKhoan: req.body.taiKhoan,
-    matKhau: req.body.matKhau,
-    email: req.body.email,
-    soDienThoai: req.body.soDienThoai,
-    diaChi: req.body.diaChi,
-    ngaySinh: req.body.ngaySinh,
-    phanQuyen: req.body.phanQuyen
+    ...req.body
   })
   try {
     const saveUser = await user.save();
@@ -55,13 +49,14 @@ router.patch('/:userId', async (req, res) => {
       { _id: req.params.userId },
       {
         $set: {
-          taiKhoan: req.body.taiKhoan,
-          matKhau: req.body.matKhau,
-          email: req.body.email,
-          soDienThoai: req.body.soDienThoai,
-          diaChi: req.body.diaChi,
-          ngaySinh: req.body.ngaySinh,
-          phanQuyen: req.body.phanQuyen
+          // taiKhoan: req.body.taiKhoan,
+          // matKhau: req.body.matKhau,
+          // email: req.body.email,
+          // soDienThoai: req.body.soDienThoai,
+          // diaChi: req.body.diaChi,
+          // ngaySinh: req.body.ngaySinh,
+          // phanQuyen: req.body.phanQuyen
+          ...req.body
         }
       }
     );

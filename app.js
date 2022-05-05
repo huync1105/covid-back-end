@@ -16,6 +16,12 @@ app.use(morgan('combined'));
 const userRouter = require('./Routes/users');
 app.use('/users', userRouter);
 
+const postRouter = require('./Routes/posts');
+app.use('/posts', postRouter);
+
+const mainCategoryRouter = require('./Routes/main-category');
+app.use('/maincategories', mainCategoryRouter)
+
 // connect to db
 mongoose.connect(
   dbUrl,
