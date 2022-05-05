@@ -35,7 +35,7 @@ router.get('/:postId', async (req, res) => {
 // delete user
 router.delete('/:postId', async (req, res) => {
   try {
-    const deleteUser = await User.remove({ _id: req.params.postId });
+    const deleteUser = await Post.remove({ _id: req.params.postId });
     res.json(deleteUser)
   } catch (err) {
     res.json({ message: err });

@@ -20,7 +20,10 @@ const postRouter = require('./Routes/posts');
 app.use('/posts', postRouter);
 
 const mainCategoryRouter = require('./Routes/main-category');
-app.use('/maincategories', mainCategoryRouter)
+app.use('/maincategories', mainCategoryRouter);
+
+const subCategoryRouter = require('./Routes/sub-category');
+app.use('/subcategories', subCategoryRouter);
 
 // connect to db
 mongoose.connect(

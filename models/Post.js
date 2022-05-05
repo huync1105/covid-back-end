@@ -21,8 +21,8 @@ const PostSchema = mongoose.Schema({
     idNhanVien: {
       type: String
     },
-    trangThai: {
-      type: String
+    daDuyet: {
+      type: Boolean
     },
 })
 
