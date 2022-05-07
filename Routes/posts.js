@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
-// get users
+// get posts
 router.get('/', async (req, res) => {
   Post.find((err, users) => {
     res.json(users);
   })
 })
 
-// add user
+// add post
 router.post('/', async (req, res) => {
   const user = new Post({
     ...req.body
@@ -22,45 +22,38 @@ router.post('/', async (req, res) => {
   }
 })
 
-// get user by id
+// get post by id
 router.get('/:postId', async (req, res) => {
   try {
-    const user = await User.findById(req.params.postId);
-    res.json(user)
+    const post = await Post.findById(req.params.postId);
+    res.json(post)
   } catch (err) {
     res.json({ message: err });
   }
 })
 
-// delete user
+// delete post
 router.delete('/:postId', async (req, res) => {
   try {
-    const deleteUser = await Post.remove({ _id: req.params.postId });
-    res.json(deleteUser)
+    const deletePost = await Post.remove({ _id: req.params.postId });
+    res.json(deletePost)
   } catch (err) {
     res.json({ message: err });
   }
 })
 
-// update user
+// update Post
 router.patch('/:postId', async (req, res) => {
   try {
-    const updateUser = await Post.updateOne(
+    const updatePost = await Post.updateOne(
       { _id: req.params.postId },
       {
         $set: {
-          tieuDe: req.body.tieuDe,
-          moTa: req.body.moTa,
-          noiDung: req.body.noiDung,
-          anhBia: req.body.anhBia,
-          ngayTao: req.body.ngayTao,
-          idDanhMuc: req.body.idDanhMuc,
-          idNhanVien: req.body.idNhanVien,
-          trangThai: req.body.trangThai
+          ...req.body,
         }
       }
     );
-    res.json(updateUser)
+    res.json(updatePost)
   } catch (err) {
     res.json({ message: err });
   }

@@ -9,6 +9,9 @@ const PostSchema = mongoose.Schema({
     noiDung: {
       type: String
     },
+    noiDungHTML: {
+      type: String
+    },
     anhBia: {
       type: String
     },
