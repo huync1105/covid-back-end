@@ -22,7 +22,7 @@ const PostSchema = mongoose.Schema({
       type: String
     },
     daDuyet: {
-      type: Boolean
+      type: Boolean,
     },
 })
 

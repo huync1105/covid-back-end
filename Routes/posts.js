@@ -42,21 +42,14 @@ router.delete('/:postId', async (req, res) => {
   }
 })
 
-// update user
+// update post
 router.patch('/:postId', async (req, res) => {
   try {
     const updateUser = await Post.updateOne(
       { _id: req.params.postId },
       {
         $set: {
-          tieuDe: req.body.tieuDe,
-          moTa: req.body.moTa,
-          noiDung: req.body.noiDung,
-          anhBia: req.body.anhBia,
-          ngayTao: req.body.ngayTao,
-          idDanhMuc: req.body.idDanhMuc,
-          idNhanVien: req.body.idNhanVien,
-          trangThai: req.body.trangThai
+          ...req.body
         }
       }
     );
