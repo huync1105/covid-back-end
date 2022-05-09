@@ -20,7 +20,7 @@ const UserSchema = mongoose.Schema({
     }, 
     phanQuyen: {
       type: String,
-    }
+    },
 })
 
 module.exports = mongoose.model('Users', UserSchema)
