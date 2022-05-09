@@ -31,6 +31,24 @@ router.get('/:catId', async (req, res) => {
     res.json({ message: err });
   }
 })
+// router.get('/:catId', async (req, res) => {
+//   try {
+//     const category = await SubCategory.findById(
+//       {_id: req.params.catId},
+//       {
+//         $lookup: {
+//           from: 'Posts',
+//           localField: '_id',
+//           foreignField: 'idDanhMuc',
+//           as: 'listBaiViet'
+//         }
+//       }
+//       );
+//     res.json(category)
+//   } catch (err) {
+//     res.json({ message: err });
+//   }
+// })
 
 // delete category
 router.delete('/:catId', async (req, res) => {
@@ -58,5 +76,6 @@ router.patch('/:catId', async (req, res) => {
     res.json({ message: err });
   }
 })
+
 
 module.exports = router;
