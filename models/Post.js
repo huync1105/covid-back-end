@@ -12,6 +12,9 @@ const PostSchema = mongoose.Schema({
     noiDungHTML: {
       type: String
     },
+    noiDungText: {
+      type: String
+    },
     anhBia: {
       type: String
     },
