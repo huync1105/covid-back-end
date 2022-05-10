@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 const dbUrl = 'mongodb://localhost:27017/covid';
 // const dbUrl = 'mongodb+srv://huync1105:64719199%40huy@cluster0.t2ebu.mongodb.net/covid-news?retryWrites=true&w=majority';
@@ -24,6 +25,11 @@ app.use('/maincategories', mainCategoryRouter);
 
 const subCategoryRouter = require('./Routes/sub-category');
 app.use('/subcategories', subCategoryRouter);
+
+const commentRouter = require('./Routes/comments');
+app.use('/comments', commentRouter);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // connect to db
 mongoose.connect(
