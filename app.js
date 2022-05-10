@@ -26,6 +26,9 @@ app.use('/maincategories', mainCategoryRouter);
 const subCategoryRouter = require('./Routes/sub-category');
 app.use('/subcategories', subCategoryRouter);
 
+const commentRouter = require('./Routes/comments');
+app.use('/comments', commentRouter);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // connect to db
