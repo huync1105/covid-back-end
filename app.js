@@ -29,6 +29,8 @@ app.use('/subcategories', subCategoryRouter);
 const commentRouter = require('./Routes/comments');
 app.use('/comments', commentRouter);
 
+app.use('/admin', express.static(path.join(__dirname, 'public/Login/login.html')));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // connect to db
@@ -44,4 +46,4 @@ mongoose.connect(
 )
 
 // listening port
-app.listen(3000);
+app.listen(1234);
