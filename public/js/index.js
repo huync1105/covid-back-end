@@ -17,12 +17,12 @@ function LoadData() {
       posts = res;
       // console.log(posts);
       renderSlides(posts);
-    })
-  getCategoryList()
-    .then(res => {
-      subCategories = res;
-      joinPosts();
-      renderDropDown(subCategories);
+      getCategoryList()
+        .then(res => {
+          subCategories = res;
+          joinPosts();
+          renderDropDown(subCategories);
+        })
     })
 }
 

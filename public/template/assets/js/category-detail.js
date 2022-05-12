@@ -8,6 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
 })
 
 function loadData() {
+  getUserData();
   if (categoryId) {
     getCategoryById(categoryId)
     .then(res => {
@@ -17,6 +18,31 @@ function loadData() {
       categoryDate.value = category.ngayTao;
     })
   }
+}
+
+function getUserData() {
+  user = JSON.parse(localStorage.currentUserObj);
+  // console.log("user", user);
+  document.querySelector('.profile-pic').innerHTML = `
+    <div class="count-indicator">
+      <img class="img-xs rounded-circle " src="../../assets/images/faces/face25.jpg" alt="">
+    </div>
+    <div class="profile-name">
+      <h5 class="mb-0 font-weight-normal">${user.ten}</h5>
+      <span>${getPermission(user.phanQuyen)}</span>
+    </div>
+  `
+  document.querySelector('.navbar-profile').innerHTML = `
+    <img class="img-xs rounded-circle" src="../../assets/images/faces/face25.jpg" alt="">
+    <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.ten}</p>
+    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+  `
+}
+
+function getPermission(permission) {
+  if (permission === 'PER01') return 'Tổng biên tập'
+  if (permission === 'PER02') return 'Biên tập'
+  if (permission === 'PER03') return 'Thành viên'
 }
 
 // get category by id

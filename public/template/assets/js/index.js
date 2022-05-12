@@ -19,13 +19,13 @@ function loadData() {
         <img class="img-xs rounded-circle " src="assets/images/faces/face25.jpg" alt="">
       </div>
       <div class="profile-name">
-        <h5 class="mb-0 font-weight-normal">${currentUser.taiKhoan}</h5>
+        <h5 class="mb-0 font-weight-normal">${currentUser.ten}</h5>
         <span>${getUserPermissionName(currentUser.phanQuyen)}</span>
       </div>
     `
     document.querySelector('.navbar-profile').innerHTML = `
       <img class="img-xs rounded-circle" src="assets/images/faces/face25.jpg" alt="">
-      <p class="mb-0 d-none d-sm-block navbar-profile-name">${currentUser.taiKhoan}</p>
+      <p class="mb-0 d-none d-sm-block navbar-profile-name">${currentUser.ten}</p>
       <i class="mdi mdi-menu-down d-none d-sm-block"></i>
     `
   })
@@ -33,15 +33,15 @@ function loadData() {
   .then(res => {
     users = res;
     // console.log("users", users);
-  })
-  getPostsData()
-  .then(res => {
-    posts = res;
-    mergeData(users, posts);
-    renderPageNav(posts)
-    posts = splitPages(posts);
-    bindDataToTable();
-    // console.log("posts", posts);
+    getPostsData()
+    .then(res => {
+      posts = res;
+      mergeData(users, posts);
+      renderPageNav(posts)
+      posts = splitPages(posts);
+      bindDataToTable();
+      // console.log("posts", posts);
+    })
   })
 }
 
@@ -166,7 +166,7 @@ function bindDataToTable() {
     <tr>
       <td>
         <img src="assets/images/faces/face25.jpg" alt="image" />
-        <span class="pl-2">${post.author.taiKhoan}</span>
+        <span class="pl-2">${post.author.ten}</span>
       </td>
       <td> ${getUserPermissionName(post.author.phanQuyen)} </td>
       <td> ${post.tieuDe} </td>

@@ -1,4 +1,5 @@
 const userId = document.querySelector('#user-id');
+const userFullName = document.querySelector('#user-fullname');
 const userName = document.querySelector('#user-name');
 const userPassword = document.querySelector('#user-password');
 const userEmail = document.querySelector('#user-email');
@@ -29,6 +30,7 @@ window.addEventListener("DOMContentLoaded", () => {
 })
 
 function loadData() {
+  getUserAdminData()
   // Lấy userId từ input
   currentUserId = localStorage.currentUserId;
   // console.log("currentUserId", currentUserId);
@@ -45,6 +47,31 @@ function loadData() {
   })
   bindDropDown();
 }
+
+function getUserAdminData() {
+  user = JSON.parse(localStorage.currentUserObj);
+  // console.log("user", user);
+  document.querySelector('.profile-pic').innerHTML = `
+    <div class="count-indicator">
+      <img class="img-xs rounded-circle " src="../../assets/images/faces/face25.jpg" alt="">
+    </div>
+    <div class="profile-name">
+      <h5 class="mb-0 font-weight-normal">${user.ten}</h5>
+      <span>${getPermission(user.phanQuyen)}</span>
+    </div>
+  `
+  document.querySelector('.navbar-profile').innerHTML = `
+    <img class="img-xs rounded-circle" src="../../assets/images/faces/face25.jpg" alt="">
+    <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.ten}</p>
+    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+  `
+}
+function getPermission(permission) {
+  if (permission === 'PER01') return 'Tổng biên tập'
+  if (permission === 'PER02') return 'Biên tập'
+  if (permission === 'PER03') return 'Thành viên'
+}
+
 
 // get user by id
 async function getUserData(id) {
@@ -69,6 +96,7 @@ async function getUserData(id) {
 function bindDataToInput(user) {
   checkPermission(user.phanQuyen)
   if (user._id) {
+    userFullName.value = user.ten;
     userPermission.value = user.phanQuyen;
     userDate.value = user.ngaySinh;
     userAddress.value = user.diaChi;
@@ -78,6 +106,7 @@ function bindDataToInput(user) {
     userName.value = user.taiKhoan;
   } else {
     // userPermission.value = user.phanQuyen;
+    userFullName.value = "";
     userDate.value = "";
     userAddress.value = "";
     userPhone.value = "";
@@ -143,6 +172,7 @@ async function updateUser(data, id) {
 
 function setData() {
   let data = {
+    ten: userFullName.value,
     taiKhoan: userName.value,
     matKhau: userPassword.value,
     email: userEmail.value,

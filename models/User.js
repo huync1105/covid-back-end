@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
+    ten: {
+      type: String,
+    },
     taiKhoan: {
       type: String,
     }, 

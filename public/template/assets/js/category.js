@@ -23,13 +23,13 @@ function getUserData() {
       <img class="img-xs rounded-circle " src="../../assets/images/faces/face25.jpg" alt="">
     </div>
     <div class="profile-name">
-      <h5 class="mb-0 font-weight-normal">${user.taiKhoan}</h5>
+      <h5 class="mb-0 font-weight-normal">${user.ten}</h5>
       <span>${getPermission(user.phanQuyen)}</span>
     </div>
   `
   document.querySelector('.navbar-profile').innerHTML = `
     <img class="img-xs rounded-circle" src="../../assets/images/faces/face25.jpg" alt="">
-    <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.taiKhoan}</p>
+    <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.ten}</p>
     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
   `
 }
