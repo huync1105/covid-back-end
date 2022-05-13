@@ -33,19 +33,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
 loginBtn.addEventListener('click', () => {
   let userObj = {
-    taiKhoan: userName.value,
+    // taiKhoan: userName.value,
+    email: userName.value,
     matKhau: password.value
   }
   checkUser(userObj);
 })
 
 function checkUser(user) {
-  let arrTaiKhoan = users.map(ele => ele.taiKhoan);
-  if (!arrTaiKhoan.includes(user.taiKhoan)) {
+  let arrTaiKhoan = users.map(ele => ele.email);
+  if (!arrTaiKhoan.includes(user.email)) {
     userName.classList.add('validate');
   } else {
     removeInvalidText(userName, 'validate');
-    let existedUser = users.find(ele => ele.taiKhoan === user.taiKhoan);
+    let existedUser = users.find(ele => ele.email === user.email);
     if (user.matKhau !== existedUser.matKhau) {
       password.classList.add('validate');
     } else {
