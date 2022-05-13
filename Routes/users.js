@@ -4,9 +4,24 @@ const User = require('../models/User');
 
 // get users
 router.get('/', async (req, res) => {
-  User.find((err, users) => {
+  // User.find((err, users) => {
+  //   res.json(users);
+  // })
+  try {
+    const users = await User.aggregate([
+      {
+        $lookup: {
+          from: 'posts',
+          localField: '_id',
+          foreignField: 'idNhanVien',
+          as: 'posts'
+        }
+      }
+    ])
     res.json(users);
-  })
+  } catch (err) {
+    res.json({ err: err });
+  }
 })
 
 // add user

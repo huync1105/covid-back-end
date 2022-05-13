@@ -4,9 +4,24 @@ const SubCategory = require('../models/Sub-Category');
 
 // get data
 router.get('/', async (req, res) => {
-  SubCategory.find((err, users) => {
-    res.json(users);
-  })
+  // SubCategory.find((err, users) => {
+  //   res.json(users);
+  // })
+  try {
+    const data = await SubCategory.aggregate([
+      {
+        $lookup: {
+          from: 'posts',
+          localField: '_id',
+          foreignField: 'idDanhMuc',
+          as: 'posts'
+        }
+      }
+    ])
+    res.json(data);
+  } catch (err) {
+    res.json({ message: err });
+  }
 })
 
 //add data 

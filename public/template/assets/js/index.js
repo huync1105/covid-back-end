@@ -29,19 +29,14 @@ function loadData() {
       <i class="mdi mdi-menu-down d-none d-sm-block"></i>
     `
   })
-  getUsersData()
+  getPostsData()
   .then(res => {
-    users = res;
-    // console.log("users", users);
-    getPostsData()
-    .then(res => {
-      posts = res;
-      mergeData(users, posts);
-      renderPageNav(posts)
-      posts = splitPages(posts);
-      bindDataToTable();
-      // console.log("posts", posts);
-    })
+    posts = res;
+    // console.log("posts", posts);
+    // mergeData(users, posts);
+    renderPageNav(posts)
+    bindDataToTable(posts);
+    posts = splitPages(posts);
   })
 }
 
@@ -129,46 +124,15 @@ async function getCategoryList() {
   return response.json();
 }
 
-// get users
-async function getUsersData() {
-  let userAPI = window.location.origin  +  '/users';
-  let request = {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify()
-  }
-  const response = await fetch(userAPI, request);
-  return response.json();
-}
-
-function mergeData(users, posts) {
-  posts.forEach(post => {
-    post.author = {};
-    users.forEach(user => {
-      if (user._id === post.idNhanVien) {
-        post.author = user;
-      }
-    })
-  })
-  // console.log(posts);
-}
-
-function bindDataToTable() {
+function bindDataToTable(posts) {
   let data = posts.map(post => {
     return `
     <tr>
       <td>
         <img src="assets/images/faces/face25.jpg" alt="image" />
-        <span class="pl-2">${post.author.ten}</span>
+        <span class="pl-2">${post.users[0].ten}</span>
       </td>
-      <td> ${getUserPermissionName(post.author.phanQuyen)} </td>
+      <td> ${getUserPermissionName(post.users[0].phanQuyen)} </td>
       <td> ${post.tieuDe} </td>
       <td> ${post.ngayTao} </td>
       <td>

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const PostSchema = mongoose.Schema({
+const Schema = mongoose.Schema;
+const PostSchema = Schema({
     tieuDe: {
       type: String
     },
@@ -22,10 +23,12 @@ const PostSchema = mongoose.Schema({
       type: String
     },
     idDanhMuc: {
-      type: String
+      type: Schema.Types.ObjectId,
+      res: 'subcategories'
     },
     idNhanVien: {
-      type: String
+      type: Schema.Types.ObjectId,
+      ref: 'users'
     },
     daDuyet: {
       type: Boolean,

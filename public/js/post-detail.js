@@ -19,14 +19,14 @@ function loadData() {
   getCategoryList()
     .then(res => {
       subCategories = res;
-      joinPosts();
-      renderAccordion();
-    })
-  getPostData()
-    .then(res => {
-      post = res;
-      // console.log("post", post);
-      renderPostContent();
+      // joinPosts();
+      renderAccordion(subCategories);
+      getPostData(localStorage.postId)
+        .then(res => {
+          post = res;
+          // console.log("post", post);
+          renderPostContent(post);
+        })
     })
 }
 
@@ -66,19 +66,7 @@ async function getCategoryList() {
   const response = await fetch(API, request);
   return response.json();
 }
-
-function joinPosts() {
-  subCategories.forEach(category => {
-    category.listPost = [];
-    posts.forEach(post => {
-      if (post.idDanhMuc === category._id) {
-        category.listPost.push(post)
-      }
-    })
-  })
-}
-
-function renderAccordion() {
+function renderAccordion(subCategories) {
   let data = subCategories.map((ele, index) => {
     return `
       <div class="accordion-item">
@@ -91,7 +79,7 @@ function renderAccordion() {
         <div id="collapse${index}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <div class="list-group">
-              ${ele.listPost.map(post => {
+              ${ele.posts.map(post => {
                 return `
                   <a href="" class="list-group-item list-group-item-action" onclick="changePage('${post._id}')">${post.tieuDe}</a>
                 `
@@ -107,13 +95,14 @@ function renderAccordion() {
 
 function changePage(id) {
   localStorage.setItem('postId', id);
+  loadData();
 }
 
 // get post by id
-async function getPostData() {
-  let currentPostId = localStorage.postId;
+async function getPostData(id) {
+  // let currentPostId = localStorage.postId;
   // console.log(currentPostId);
-  let userAPI = window.location.origin  +  `/posts/${currentPostId}`;
+  let userAPI = window.location.origin  +  `/posts/${id}`;
   let request = {
     method: 'GET',
     mode: 'cors',
@@ -130,7 +119,7 @@ async function getPostData() {
   return response.json();
 }
 
-function renderPostContent() {
+function renderPostContent(post) {
   // console.log(post);
   let category = subCategories.find(obj => obj._id === post.idDanhMuc).ten;
   // console.log(category);

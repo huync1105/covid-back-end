@@ -4,9 +4,24 @@ const Post = require('../models/Post');
 
 // get posts
 router.get('/', async (req, res) => {
-  Post.find((err, users) => {
-    res.json(users);
-  })
+  // Post.find((err, users) => {
+  //   res.json(users);
+  // })
+  try {
+    const posts = await Post.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'idNhanVien',
+          foreignField: '_id',
+          as: 'users'
+        }
+      }, 
+    ])
+    res.json(posts);
+  } catch (err) {
+    res.json({ err: err });
+  }
 })
 
 // add post

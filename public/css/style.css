@@ -473,7 +473,7 @@ input.form-control {
   width: 100%;
   min-height: 100px;
   max-height: 80vh;
-  overflow: scroll;
+  overflow-y: scroll;
   background-color: rgb(245, 248, 255);
   display: none;
 }

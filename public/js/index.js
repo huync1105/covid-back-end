@@ -17,12 +17,13 @@ function LoadData() {
       posts = res;
       // console.log(posts);
       renderSlides(posts);
-      getCategoryList()
-        .then(res => {
-          subCategories = res;
-          joinPosts();
-          renderDropDown(subCategories);
-        })
+    })
+  getCategoryList()
+    .then(res => {
+      subCategories = res;
+      // console.log("subCategories", subCategories);
+      renderDropDown(subCategories);
+      renderPosts(subCategories)
     })
 }
 
@@ -63,19 +64,7 @@ async function getCategoryList() {
   return response.json();
 }
 
-function joinPosts() {
-  subCategories.forEach(category => {
-    category.listPost = [];
-    posts.forEach(post => {
-      if (post.idDanhMuc === category._id) {
-        category.listPost.push(post)
-      }
-    })
-  })
-  renderPosts();
-}
-
-function renderPosts() {
+function renderPosts(subCategories) {
   let data = subCategories.map(ele => {
     return `
       <section id="${ele._id}">
@@ -88,7 +77,7 @@ function renderPosts() {
             </div>
           </div>
           <div class="row">
-            ${ele.listPost.map(post => {
+            ${ele.posts.map(post => {
       if (post.daDuyet)
         return `
               <div class="col-md-4 col-sm-6 mb-4">
