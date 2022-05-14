@@ -16,7 +16,7 @@ function loadData() {
     localStorage.setItem('currentUserObj', JSON.stringify(currentUser));
     document.querySelector('.profile-pic').innerHTML = `
       <div class="count-indicator">
-        <img class="img-xs rounded-circle " src="assets/images/faces/face25.jpg" alt="">
+        <img class="img-xs rounded-circle " src="${currentUser.img}" alt="">
       </div>
       <div class="profile-name">
         <h5 class="mb-0 font-weight-normal">${currentUser.ten}</h5>
@@ -24,7 +24,7 @@ function loadData() {
       </div>
     `
     document.querySelector('.navbar-profile').innerHTML = `
-      <img class="img-xs rounded-circle" src="assets/images/faces/face25.jpg" alt="">
+      <img class="img-xs rounded-circle" src="${currentUser.img}" alt="">
       <p class="mb-0 d-none d-sm-block navbar-profile-name">${currentUser.ten}</p>
       <i class="mdi mdi-menu-down d-none d-sm-block"></i>
     `
@@ -129,7 +129,7 @@ function bindDataToTable(posts) {
     return `
     <tr>
       <td>
-        <img src="assets/images/faces/face25.jpg" alt="image" />
+        <img src="${post.users[0].img}" alt="image" />
         <span class="pl-2">${post.users[0].ten}</span>
       </td>
       <td> ${getUserPermissionName(post.users[0].phanQuyen)} </td>
@@ -138,6 +138,7 @@ function bindDataToTable(posts) {
       <td>
         ${post.daDuyet?`<div class="badge badge-outline-success">Được duyệt</div>`:`<div class="badge badge-outline-warning">Đang duyệt</div>`}
       </td>
+      ${currentUser.phanQuyen==='PER01'?`
       <td>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
@@ -175,6 +176,7 @@ function bindDataToTable(posts) {
           </button>
         </div>
       </td>
+      `:''}
     </tr>
     `
   }).join('');

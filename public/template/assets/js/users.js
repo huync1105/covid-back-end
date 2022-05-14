@@ -60,7 +60,7 @@ function getUserData() {
   console.log("user", user);
   document.querySelector('.profile-pic').innerHTML = `
     <div class="count-indicator">
-      <img class="img-xs rounded-circle " src="../../assets/images/faces/face25.jpg" alt="">
+      <img class="img-xs rounded-circle " src="${user.img}" alt="">
     </div>
     <div class="profile-name">
       <h5 class="mb-0 font-weight-normal">${user.ten}</h5>
@@ -68,7 +68,7 @@ function getUserData() {
     </div>
   `
   document.querySelector('.navbar-profile').innerHTML = `
-    <img class="img-xs rounded-circle" src="../../assets/images/faces/face25.jpg" alt="">
+    <img class="img-xs rounded-circle" src="${user.img}" alt="">
     <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.ten}</p>
     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
   `
@@ -133,6 +133,7 @@ async function deleteUser(id) {
 }
 
 function bindUsersToTable(users) {
+  let currentUser = user;
   let data = users.map(user => {
     return `
     <tr>
@@ -143,33 +144,35 @@ function bindUsersToTable(users) {
       <td>${getPermission(user.phanQuyen)}</td>
       <td>${user.ngaySinh}</td>
 
-      <td class="edit-user">
-        <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
-        <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-          <a href="#" onclick="getUserDetail('${user._id}')" class="dropdown-item preview-item" id="test-dropdown">
-            <div class="preview-thumbnail">
-              <div class="preview-icon">
-                <i class="mdi mdi-account-card-details text-info"></i>
+      ${currentUser.phanQuyen === 'PER01'?`
+        <td class="edit-user">
+          <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+          <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+            <a href="#" onclick="getUserDetail('${user._id}')" class="dropdown-item preview-item" id="test-dropdown">
+              <div class="preview-thumbnail">
+                <div class="preview-icon">
+                  <i class="mdi mdi-account-card-details text-info"></i>
+                </div>
               </div>
-            </div>
-            <div class="preview-item-content">
-              <p class="preview-subject ellipsis mb-1 text-small">Chi tiết</p>
-            </div>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item preview-item" id="test-dropdown" onclick="removeUser('${user._id}')">
-            <div class="preview-thumbnail">
-              <div class="preview-icon">
-                <i class="mdi mdi-delete text-success"></i>
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1 text-small">Chi tiết</p>
               </div>
-            </div>
-            <div class="preview-item-content">
-              <p class="preview-subject ellipsis mb-1 text-small">Xóa</p>
-            </div>
-          </a>
-        </div>
-      </td>
-    </tr>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item preview-item" id="test-dropdown" onclick="removeUser('${user._id}')">
+              <div class="preview-thumbnail">
+                <div class="preview-icon">
+                  <i class="mdi mdi-delete text-success"></i>
+                </div>
+              </div>
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1 text-small">Xóa</p>
+              </div>
+            </a>
+          </div>
+        </td>
+      </tr>
+      `:''}
     `
   }).join('');
   tableContent.innerHTML = data;
@@ -185,6 +188,7 @@ function getBtnPermission(permission) {
   if (permission !== 'PER01') {
     document.querySelector('.add-new-user').style.visibility = 'hidden';
     document.querySelectorAll('.edit-user').forEach(ele => {
+      console.log(ele);
       ele.style.visibility = 'hidden';
     })
   }

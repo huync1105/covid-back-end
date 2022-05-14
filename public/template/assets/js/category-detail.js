@@ -25,7 +25,7 @@ function getUserData() {
   // console.log("user", user);
   document.querySelector('.profile-pic').innerHTML = `
     <div class="count-indicator">
-      <img class="img-xs rounded-circle " src="../../assets/images/faces/face25.jpg" alt="">
+      <img class="img-xs rounded-circle " src="${user.img}" alt="">
     </div>
     <div class="profile-name">
       <h5 class="mb-0 font-weight-normal">${user.ten}</h5>
@@ -33,7 +33,7 @@ function getUserData() {
     </div>
   `
   document.querySelector('.navbar-profile').innerHTML = `
-    <img class="img-xs rounded-circle" src="../../assets/images/faces/face25.jpg" alt="">
+    <img class="img-xs rounded-circle" src="${user.img}" alt="">
     <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.ten}</p>
     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
   `

@@ -58,6 +58,7 @@ function getUserData() {
     <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.ten}</p>
     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
   `
+  // postAccept.disabled = user.phanQuyen!=='PER01';
 }
 
 function getPermission(permission) {
@@ -97,7 +98,9 @@ function bindCategoryDropDown() {
     `
   })
   document.querySelector('#post-category').innerHTML = data;
-  document.querySelector('#post-accepted').innerHTML = data2;
+  document.querySelector('#post-accepted').innerHTML = user.phanQuyen!=='PER01'?`
+    <option value="false">Đang duyệt</option>
+  `:data2;
 }
 
 // get post by id

@@ -158,16 +158,18 @@
             </div>
             <div class="text-center img-upload">
                 <!-- Profile picture image-->
-                <img class="img-fluid rounded-circle mb-1" src="../../assets/images/faces/face25.jpg" alt="..." style="max-width: 115px; max-height: 150px">
+                <div class="user-img">
+                  <img class="img-fluid rounded-circle mb-1" src="../../assets/images/faces/face25.jpg" alt="..." style="max-width: 115px; max-height: 150px">
+                </div>
                 
                 <!-- Profile picture upload button-->
                 <div class="img-button">
                   <form action="">
                     <div class="pro-button pic-button mb-3 form-group">
-                      <label for="inputEmail" class="form-label"> Ảnh </label>
-                      <input type="file" name="img[]" class="file-upload-default">
+                      <!-- <label for="inputEmail" class="form-label"> Ảnh </label>
+                      <input type="file" name="img[]" class="file-upload-default"> -->
                       <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Tải ảnh lên">
+                        <input type="text" class="form-control file-upload-info" id="user-img" placeholder="Tải ảnh lên">
                         <span class="input-group-append">
                           <button class="file-upload-browse btn btn-primary" type="button">Tải lên</button>
                         </span>
