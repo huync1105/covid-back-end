@@ -37,6 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
     })
   } else {
     quill.root.innerHTML = '';
+    postDate.value = getToDay();
   }
 })
 
@@ -175,19 +176,78 @@ function setData() {
 
 function saveData() {
   // console.log("setData", setData());
-  if (localStorage.postId) {
-    updatePost(setData(), localStorage.postId)
-    .then(res => {
-      alert(`Lưu bài viết thành công!`)
-    })
-  } else {
-    addPost(setData())
-    .then(res => {
-      alert(`Thêm bài viết thành công!`)
-      location.pathname = 'template/index.html';
-    })
-    .catch(err => {})
-    .finally(() => {
-    })
+  if (validateData(setData())) {
+    if (localStorage.postId) {
+      updatePost(setData(), localStorage.postId)
+      .then(res => {
+        alert(`Lưu bài viết thành công!`)
+      })
+    } else {
+      addPost(setData())
+      .then(res => {
+        alert(`Thêm bài viết thành công!`)
+        location.pathname = 'template/index.html';
+      })
+      .catch(err => {})
+      .finally(() => {
+      })
+    }
   }
+}
+
+function validateData(data) {
+  if (!checkValue(data.tieuDe)) {
+    alert('Vui lòng nhập tiều đề');
+    return false;
+  } 
+  else if (!checkValue(data.moTa)) {
+    alert('Vui lòng nhập mô tả');
+    return false;
+  }
+  else if (!checkValue(data.idDanhMuc)) {
+    alert('Vui lòng nhập danh mục');
+    return false;
+  }
+  else if (!checkValue(data.anhBia)) {
+    alert('Vui lòng nhập ảnh bìa');
+    return false;
+  }
+  else if (!checkValue(data.ngayTao)) {
+    alert('Vui lòng nhập ngày tạo');
+    return false;
+  }
+  else if (!checkValue(data.daDuyet)) {
+    alert('Vui lòng nhập trạng thái');
+    return false;
+  }
+  else if (!checkValue(data.noiDung)) {
+    alert('Vui lòng nhập nội dung');
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+function checkValue(value) {
+  if (value.trim().toString() === '' || value == null || value == undefined) {
+    return false
+  } else {
+    return true
+  }
+}
+
+function getToDay() {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  if(dd<10) {
+      dd = '0'+dd
+  } 
+  if(mm<10) {
+      mm = '0'+mm
+  } 
+  today = yyyy + '-' + mm + '-' + dd;
+  return today;
 }
