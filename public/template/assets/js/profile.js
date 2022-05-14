@@ -11,6 +11,7 @@ const userImg = document.querySelector('#user-img');
 let currentUserId = "";
 let currentUser = {};
 let user = {};
+let usersArr = [];
 let permissionList = [
   {
     id: 'PER01',
@@ -31,6 +32,11 @@ window.addEventListener("DOMContentLoaded", () => {
 })
 
 function loadData() {
+  getUsers()
+  .then(users => {
+    usersArr = users.map(user => user.email);
+    console.log("usersArr", usersArr);
+  })
   getUserAdminData()
   // Lấy userId từ input
   currentUserId = localStorage.currentUserId;
@@ -78,6 +84,25 @@ function getPermission(permission) {
 // get user by id
 async function getUserData(id) {
   let userAPI = window.location.origin  +  `/users/${id}`;
+  let request = {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify()
+  }
+  const response = await fetch(userAPI, request);
+  return response.json();
+}
+
+// get user by id
+async function getUsers() {
+  let userAPI = window.location.origin  +  `/users`;
   let request = {
     method: 'GET',
     mode: 'cors',
@@ -186,7 +211,7 @@ function setData() {
     diaChi: userAddress.value,
     ngaySinh: userDate.value,
     phanQuyen: userPermission.value,
-    img: userImg.value,
+    img: userImg.value || '../../assets/images/faces/face25.jpg',
   }
   return data;
 }
@@ -194,20 +219,22 @@ function setData() {
 function saveUser() {
   // console.log(user);
   // console.log(setData());
-  if (user._id) {
-    updateUser(setData(), user._id)
-    .then(res => {
-      alert('Lưu thành công')
-    })
-    .catch(err => console.log(err))
-    .finally()
-  } else {
-    addUser(setData())
-    .then(res => {
-      alert('Thêm thành công');
-      location.pathname = 'template/pages/user/User.html'
-    });
-    
+  if (validateData(setData()) && checkEmail(setData())) {
+    if (user._id) {
+          updateUser(setData(), user._id)
+          .then(res => {
+            alert('Lưu thành công')
+          })
+          .catch(err => console.log(err))
+          .finally()
+        } else {
+          addUser(setData())
+          .then(res => {
+            alert('Thêm thành công');
+            location.pathname = 'template/pages/user/User.html'
+          });
+          
+        }
   }
 }
 
@@ -218,3 +245,58 @@ document.querySelector('.file-upload-browse').addEventListener('click', () => {
     <img class="img-fluid rounded-circle mb-1" src="../../assets/images/faces/face25.jpg" alt="..." style="max-width: 115px; max-height: 150px; width: 150px; height: 150px">
   `
 })
+
+function validateData(data) {
+  if (!checkValue(data.ten)) {
+    alert('Vui lòng nhập họ tên');
+    return false;
+  } 
+  else if (!checkValue(data.taiKhoan)) {
+    alert('Vui lòng nhập tài khoản');
+    return false;
+  }
+  else if (!checkValue(data.matKhau)) {
+    alert('Vui lòng nhập mật khẩu');
+    return false;
+  }
+  else if (!checkValue(data.email)) {
+    alert('Vui lòng nhập email');
+    return false;
+  }
+  else if (!checkValue(data.phanQuyen)) {
+    alert('Vui lòng nhập chức vụ');
+    return false;
+  }
+  else if (!checkValue(data.soDienThoai)) {
+    alert('Vui lòng nhập số điện thoại');
+    return false;
+  }
+  else if (!checkValue(data.ngaySinh)) {
+    alert('Vui lòng nhập ngày sinh');
+    return false;
+  }
+  else if (!checkValue(data.diaChi)) {
+    alert('Vui lòng nhập địa chỉ');
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+function checkValue(value) {
+  if (value.trim().toString() === '' || value == null || value == undefined) {
+    return false
+  } else {
+    return true
+  }
+}
+
+function checkEmail(data) {
+  if (usersArr.includes(data.email)) {
+    alert('Email đã được sử dụng');
+    return false;
+  } else {
+    return true;
+  }
+}
