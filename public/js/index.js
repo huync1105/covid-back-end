@@ -66,64 +66,68 @@ async function getCategoryList() {
 
 function renderPosts(subCategories) {
   let data = subCategories.map(ele => {
-    return `
-      <section id="${ele._id}">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <div class="intro">
-                <h1>${ele.ten}</h1>
+    if (ele.posts.length) {
+      return `
+        <section id="${ele._id}">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="intro">
+                  <h1>${ele.ten}</h1>
+                </div>
               </div>
             </div>
+            <div class="row">
+              ${ele.posts.map(post => {
+        if (post.daDuyet)
+          return `
+                <div class="col-md-4 col-sm-6 mb-4">
+                  <article class="blog-post">
+                    <div class="post-img">
+                      <img src="${post.anhBia}" height="100%" alt="${post.anhBia}">
+                    </div>
+                    <a class="tag" onclick="seeDetail('${post._id}')">Tìm hiểu</a>
+                    <div class="content" style="min-height: 280px">
+                        <small>${post.ngayTao}</small>
+                        <h5>${post.tieuDe}</h5>
+                        <p>${post.moTa}</p>
+                    </div>
+                  </article>
+                </div>
+                `
+      }).join('')}
+            </div>
           </div>
-          <div class="row">
-            ${ele.posts.map(post => {
-      if (post.daDuyet)
-        return `
-              <div class="col-md-4 col-sm-6 mb-4">
-                <article class="blog-post">
-                  <div class="post-img">
-                    <img src="${post.anhBia}" height="100%" alt="${post.anhBia}">
-                  </div>
-                  <a class="tag" onclick="seeDetail('${post._id}')">Tìm hiểu</a>
-                  <div class="content" style="min-height: 280px">
-                      <small>${post.ngayTao}</small>
-                      <h5>${post.tieuDe}</h5>
-                      <p>${post.moTa}</p>
-                  </div>
-                </article>
-              </div>
-              `
-    }).join('')}
-          </div>
-        </div>
-      </section>
-    `
+        </section>
+      `
+    }
   }).join('');
   postContainer.innerHTML = data;
 }
 
 function renderSlides(posts) {
   let data = posts.map((post, index) => {
-    if (index === 0) {
-      return `
-      <div class="carousel-item active" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url('${post.anhBia}');background-size:cover; background-repeat: no-repeat;width: 100%; height:90vh; overflow: hidden;">
-        <div class="caroulse-content d-flex justify-content-center align-items-center flex-column" style="width: 100%; height: 100%;">
-          <h1 style="color: white; width: 30%; text-align: center" class="mb-4">${post.tieuDe}</h1>
-          <button class="btn btn-primary" onclick="seeDetail('${post._id}')">Tìm hiểu</button>
+    if(post.daDuyet) {
+      if (index === 0) {
+        return `
+        <div class="carousel-item active" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url('${post.anhBia}');background-size:cover; background-repeat: no-repeat;width: 100%; height:90vh; overflow: hidden;">
+          <div class="caroulse-content d-flex justify-content-center align-items-center flex-column" style="width: 100%; height: 100%;">
+            <h1 style="color: white; width: 30%; text-align: center" class="mb-4">${post.tieuDe}</h1>
+            <button class="btn btn-primary" type="button" onclick="seeDetail('${post._id}')">Tìm hiểu</button>
+          </div>
         </div>
-      </div>
-      `
-    } else {
-      return `
-      <div class="carousel-item" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url('${post.anhBia}');
-      background-repeat: no-repeat; background-size:cover; width: 100%; height:90vh; overflow: hidden;">
-        <div class="caroulse-content d-flex justify-content-center align-items-center flex-column" style="width: 100%; height: 100%;">
-          <h1 style="color: white; width: 30%; text-align: center" class="mb-4">${post.tieuDe}</h1>
-          <button class="btn btn-primary" onclick="seeDetail('${post._id}')">Tìm hiểu</button>
+        `
+      } else {
+        return `
+        <div class="carousel-item" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url('${post.anhBia}');
+        background-repeat: no-repeat; background-size:cover; width: 100%; height:90vh; overflow: hidden;">
+          <div class="caroulse-content d-flex justify-content-center align-items-center flex-column" style="width: 100%; height: 100%;">
+            <h1 style="color: white; width: 30%; text-align: center" class="mb-4">${post.tieuDe}</h1>
+            <button class="btn btn-primary" type="button" onclick="seeDetail('${post._id}')">Tìm hiểu</button>
+          </div>
         </div>
-      </div>
-      `
+        `
+      }
     }
   }).join('');
   heroSlider.innerHTML = data;
@@ -131,9 +135,11 @@ function renderSlides(posts) {
 
 function renderDropDown(list) {
   let data = list.map(item => {
-    return `
-      <li><a class="dropdown-item" href="#${item._id}">${item.ten}</a></li>
-    `
+    if (item.posts.length) {
+      return `
+        <li><a class="dropdown-item" href="#${item._id}">${item.ten}</a></li>
+      `
+    }
   }).join('')
   categoryDropDown.innerHTML = data;
 }

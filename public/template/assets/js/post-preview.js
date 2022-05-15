@@ -34,16 +34,16 @@ function getUserData() {
   // console.log("user", user);
   document.querySelector('.profile-pic').innerHTML = `
     <div class="count-indicator">
-      <img class="img-xs rounded-circle " src="../../assets/images/faces/face25.jpg" alt="">
+      <img class="img-xs rounded-circle " src="${user.img}" alt="">
     </div>
     <div class="profile-name">
-      <h5 class="mb-0 font-weight-normal">${user.taiKhoan}</h5>
+      <h5 class="mb-0 font-weight-normal">${user.ten}</h5>
       <span>${getPermission(user.phanQuyen)}</span>
     </div>
   `
   document.querySelector('.navbar-profile').innerHTML = `
-    <img class="img-xs rounded-circle" src="../../assets/images/faces/face25.jpg" alt="">
-    <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.taiKhoan}</p>
+    <img class="img-xs rounded-circle" src="${user.img}" alt="">
+    <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.ten}</p>
     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
   `
 }
@@ -170,7 +170,7 @@ function renderComments(comments) {
     return `
       <div class="d-flex mb-4">
       <div class="flex-shrink-0"><img class="rounded-circle"
-          src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+          width="50" height="50" src="${ele.user.img}" alt="..." /></div>
       <div class="ms-3">
         <div class="fw-bold">${ele.user.taiKhoan}</div>
         ${ele.noiDung}

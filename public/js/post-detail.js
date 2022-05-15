@@ -68,27 +68,31 @@ async function getCategoryList() {
 }
 function renderAccordion(subCategories) {
   let data = subCategories.map((ele, index) => {
-    return `
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="true" aria-controls="collapseOne">
-            ${ele.ten}
-            <span class="fa fa-chevron-down"></span>
-          </button>
-        </h2>
-        <div id="collapse${index}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <div class="list-group">
-              ${ele.posts.map(post => {
-                return `
-                  <a href="" class="list-group-item list-group-item-action" onclick="changePage('${post._id}')">${post.tieuDe}</a>
-                `
-              }).join('')}
+    if (ele.posts.length) {
+      return `
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="true" aria-controls="collapseOne">
+              ${ele.ten}
+              <span class="fa fa-chevron-down"></span>
+            </button>
+          </h2>
+          <div id="collapse${index}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div class="list-group">
+                ${ele.posts.map(post => {
+                  if (post.daDuyet) {
+                    return `
+                      <a href="" class="list-group-item list-group-item-action" onclick="changePage('${post._id}')">${post.tieuDe}</a>
+                    `
+                  }
+                }).join('')}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    `
+      `
+    }
   }).join('');
   accordion.innerHTML = data;
 }
@@ -126,14 +130,7 @@ function renderPostContent(post) {
   let data = `
   <h3 class="mb-4">${category}</h3>
   <img src="${post.anhBia}" class="img-fluid" alt="${post.anhBia}">
-  <div class="mt-3">
-    <button type="button" class="btn btn-primary play" onclick="playSpeech()">
-    <i class="fas fa-play"></i> Phát
-    </button>
-    <button type="button" class="btn btn-danger pause" onclick="pauseSpeech()">
-    <i class="fas fa-pause"></i> Dừng
-    </button>
-  </div>
+  
   <p></p>
     <h3>${post.tieuDe}</h3>
     ${post.noiDungHTML}

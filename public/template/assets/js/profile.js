@@ -35,18 +35,20 @@ function loadData() {
   getUsers()
   .then(users => {
     usersArr = users.map(user => user.email);
-    console.log("usersArr", usersArr);
+    // console.log("usersArr", usersArr);
   })
   getUserAdminData()
   // Lấy userId từ input
   currentUserId = localStorage.currentUserId;
   // console.log("currentUserId", currentUserId);
-  getUserData(currentUserId)
-  .then(res => {
-    user = res;
-    // console.log(user);
-    bindDataToInput(user)
-  })
+  if (currentUserId) {
+    getUserData(currentUserId)
+    .then(res => {
+      user = res;
+      // console.log(user);
+      bindDataToInput(user)
+    })
+  }
   getUserData(localStorage.CurrentUser)
   .then(res => {
     currentUser = res;
@@ -57,7 +59,7 @@ function loadData() {
 
 function getUserAdminData() {
   user = JSON.parse(localStorage.currentUserObj);
-  console.log("user", user);
+  // console.log("user", user);
   document.querySelector('.profile-pic').innerHTML = `
     <div class="count-indicator">
       <img class="img-xs rounded-circle " src="${user.img}" alt="">
@@ -219,22 +221,23 @@ function setData() {
 function saveUser() {
   // console.log(user);
   // console.log(setData());
-  if (validateData(setData()) && checkEmail(setData())) {
-    if (user._id) {
-          updateUser(setData(), user._id)
-          .then(res => {
-            alert('Lưu thành công')
-          })
-          .catch(err => console.log(err))
-          .finally()
-        } else {
-          addUser(setData())
-          .then(res => {
-            alert('Thêm thành công');
-            location.pathname = 'template/pages/user/User.html'
-          });
-          
-        }
+  let currentUserId = localStorage.currentUserId;
+  if (currentUserId) {
+    updateUser(setData(),currentUserId)
+    .then(res => {
+      alert('Lưu thành công')
+    })
+    .catch(err => console.log(err))
+    .finally()
+  } else {
+    if (validateData(setData()) && checkEmail(setData())) {
+      addUser(setData())
+      .then(res => {
+        alert('Thêm tài khoản thành công');
+        bindDataToInput(res);
+        location.pathname = '/template/pages/user/User.html'
+      });
+    }
   }
 }
 
@@ -252,7 +255,7 @@ function validateData(data) {
     return false;
   } 
   else if (!checkValue(data.taiKhoan)) {
-    alert('Vui lòng nhập tài khoản');
+    alert('Vui lòng nhập tên đăng nhập');
     return false;
   }
   else if (!checkValue(data.matKhau)) {
@@ -279,9 +282,9 @@ function validateData(data) {
     alert('Vui lòng nhập địa chỉ');
     return false;
   }
-  else {
-    return true;
-  }
+  return true;
+  // else {
+  // }
 }
 
 function checkValue(value) {

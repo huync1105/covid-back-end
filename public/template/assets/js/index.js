@@ -28,15 +28,15 @@ function loadData() {
       <p class="mb-0 d-none d-sm-block navbar-profile-name">${currentUser.ten}</p>
       <i class="mdi mdi-menu-down d-none d-sm-block"></i>
     `
-  })
-  getPostsData()
-  .then(res => {
-    posts = res;
-    // console.log("posts", posts);
-    // mergeData(users, posts);
-    renderPageNav(posts)
-    bindDataToTable(posts);
-    posts = splitPages(posts);
+    getPostsData()
+    .then(res => {
+      posts = res;
+      // console.log("posts", posts);
+      // mergeData(users, posts);
+      renderPageNav(posts)
+      bindDataToTable(posts);
+      posts = splitPages(posts);
+    })
   })
 }
 
@@ -125,6 +125,7 @@ async function getCategoryList() {
 }
 
 function bindDataToTable(posts) {
+  console.log("currentUser", currentUser);
   let data = posts.map(post => {
     return `
     <tr>
