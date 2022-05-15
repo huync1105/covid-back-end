@@ -213,7 +213,7 @@ function setData() {
     diaChi: userAddress.value,
     ngaySinh: userDate.value,
     phanQuyen: userPermission.value,
-    img: userImg.value || '../../assets/images/faces/face25.jpg',
+    img: userImg.value || 'https://i.pinimg.com/736x/57/fb/31/57fb3190d0cc1726d782c4e25e8561e9.jpg',
   }
   return data;
 }
@@ -223,12 +223,16 @@ function saveUser() {
   // console.log(setData());
   let currentUserId = localStorage.currentUserId;
   if (currentUserId) {
-    updateUser(setData(),currentUserId)
-    .then(res => {
-      alert('Lưu thành công')
-    })
-    .catch(err => console.log(err))
-    .finally()
+    if (setData().email === user.email) {
+      updateUser(setData(),currentUserId)
+      .then(res => {
+        alert('Lưu thành công')
+      })
+      .catch(err => console.log(err))
+      .finally()
+    } else {
+      alert('Sai email');
+    }
   } else {
     if (validateData(setData()) && checkEmail(setData())) {
       addUser(setData())

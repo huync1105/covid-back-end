@@ -20,12 +20,12 @@ function loadData() {
   .then(res => {
     users = res;
     // console.log("users", users);
-  })
-  getComments()
-  .then(res => {
-    comments = res;
-    // console.log("comments", comments);
-    mergeData(users, comments, localStorage.postId);
+    getComments()
+    .then(res => {
+      comments = res;
+      // console.log("comments", comments);
+      mergeData(users, comments, localStorage.postId);
+    })
   })
 }
 

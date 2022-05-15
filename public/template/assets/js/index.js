@@ -139,7 +139,6 @@ function bindDataToTable(posts) {
       <td>
         ${post.daDuyet?`<div class="badge badge-outline-success">Được duyệt</div>`:`<div class="badge badge-outline-warning">Đang duyệt</div>`}
       </td>
-      ${currentUser.phanQuyen==='PER01'?`
       <td>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
@@ -154,6 +153,7 @@ function bindDataToTable(posts) {
             </div>
           </a>
           <div class="dropdown-divider"></div>
+          ${post.users[0].phanQuyen === currentUser.phanQuyen || currentUser.phanQuyen === 'PER01' || currentUser.phanQuyen === 'PER02'?`
           <a href="../template/pages/forms/post.html" class="dropdown-item preview-item" id="test-dropdown" onclick="createPost('${post._id}')">
             <div class="preview-thumbnail">
               <div class="preview-icon">
@@ -164,7 +164,9 @@ function bindDataToTable(posts) {
               <p class="preview-subject ellipsis mb-1 text-small">Chỉnh sửa</p>
             </div>
           </a>
+          `:''}
           <div class="dropdown-divider"></div>
+          ${post.users[0].phanQuyen === currentUser.phanQuyen || currentUser.phanQuyen === 'PER01' || currentUser.phanQuyen === 'PER02'?`
           <button class="dropdown-item preview-item" id="delete-post" onclick="deletePost('${post._id}')">
             <div class="preview-thumbnail">
               <div class="preview-icon">
@@ -175,9 +177,9 @@ function bindDataToTable(posts) {
               <p class="preview-subject ellipsis mb-1 text-small">Xóa</p>
             </div>
           </button>
+          `:''}
         </div>
       </td>
-      `:''}
     </tr>
     `
   }).join('');

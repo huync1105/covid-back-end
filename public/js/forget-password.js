@@ -51,22 +51,28 @@ changePassWord.addEventListener('click', () => {
   .then(res => {
     users = res;
     // console.log("users", users);
-    if (checkElmail(users) && checkPassWord(userPassword.value, userRePassword.value)) {
+    if (checkEmail(users) && checkPassWord(userPassword.value, userRePassword.value)) {
       let user = users.find(user => user.email === userEmail.value);
       console.log(user);
-      updateUser(setData(user), user._id)
-      .then(res => {
+      if (userRePassword.value) {
+        updateUser(setData(user), user._id)
+        .then(res => {
+          loading.style.display = 'none';
+          alert('Thay đổi mật khẩu thành công');
+          location.pathname = '/admin'
+        })
+      } else {
+        alert('Vui lòng nhập lại mật khẩu');
         loading.style.display = 'none';
-        alert('Thay đổi mật khẩu thành công');
-        location.pathname = '/admin'
-      })
+
+      }
     } else {
       loading.style.display = 'none';
     }
   })
 })
 
-function checkElmail(users) {
+function checkEmail(users) {
   let emailList = users.map(user => user.email);
   if (!emailList.includes(userEmail.value)) {
     alert('Email không đúng!');

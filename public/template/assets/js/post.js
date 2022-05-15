@@ -170,7 +170,7 @@ function setData() {
     noiDungText: quill.getText(),
     anhBia: postImage.value,
     idDanhMuc: postCategory.value,
-    idNhanVien: user._id,
+    idNhanVien: post.idNhanVien || user._id,
     daDuyet: postAccept.value,
     ngayTao: new Date().toLocaleDateString()
   }
