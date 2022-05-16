@@ -29,6 +29,9 @@ app.use('/subcategories', subCategoryRouter);
 const commentRouter = require('./Routes/comments');
 app.use('/comments', commentRouter);
 
+const emailRouter = require('./Routes/send-mail');
+app.use('/sendemail', emailRouter)
+
 app.use('/admin', express.static(path.join(__dirname, 'public/Login/login.html')));
 
 app.use(express.static(path.join(__dirname, 'public')));

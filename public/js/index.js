@@ -195,3 +195,39 @@ function closeSearch() {
   searchResult.style.display = 'none';
 }
 
+// ================================================================
+// send email
+// ================================================================
+const userName = document.getElementById('userName');
+const userFirstName = document.getElementById('userFirstName');
+const userEmail = document.getElementById('userEmail');
+const userQuestion = document.getElementById('userQuestion');
+
+document.querySelector('.send-email-btn').addEventListener('click', () => {
+  sendEmail()
+  alert('Email sent successfully!');
+})
+
+function sendEmail() {
+  let data = {
+    ten: userName.value,
+    ho: userFirstName.value,
+    email: userEmail.value,
+    cauHoi: userQuestion.value
+  }
+  let API = window.location.origin  +  '/sendemail';
+  let request = {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data)
+  }
+  fetch(API, request);
+}
+
