@@ -23,7 +23,7 @@ function LoadData() {
       subCategories = res;
       // console.log("subCategories", subCategories);
       renderDropDown(subCategories);
-      renderPosts(subCategories)
+      renderPosts(6)
     })
 }
 
@@ -64,8 +64,8 @@ async function getCategoryList() {
   return response.json();
 }
 
-function renderPosts(subCategories) {
-  let data = subCategories.map(ele => {
+function renderPosts(i) {
+  let data = subCategories.map((ele, index, array) => {
     if (ele.posts.length) {
       return `
         <section id="${ele._id}">
@@ -78,24 +78,33 @@ function renderPosts(subCategories) {
               </div>
             </div>
             <div class="row">
-              ${ele.posts.map(post => {
-        if (post.daDuyet)
-          return `
-                <div class="col-md-4 col-sm-6 mb-4">
-                  <article class="blog-post">
-                    <div class="post-img">
-                      <img src="${post.anhBia}" height="100%" alt="${post.anhBia}">
-                    </div>
-                    <a class="tag" onclick="seeDetail('${post._id}')">Tìm hiểu</a>
-                    <div class="content" style="min-height: 280px">
-                        <small>${post.ngayTao}</small>
-                        <h5>${post.tieuDe}</h5>
-                        <p>${post.moTa}</p>
-                    </div>
-                  </article>
-                </div>
-                `
-      }).join('')}
+              ${ele.posts.map((post, index, array) => {
+                if (post.daDuyet && index < i)
+                  return `
+                        <div class="col-md-4 col-sm-6 mb-4">
+                          <article class="blog-post">
+                            <div class="post-img">
+                              <img src="${post.anhBia}" height="100%" alt="${post.anhBia}">
+                            </div>
+                            <a class="tag" onclick="seeDetail('${post._id}')">Tìm hiểu</a>
+                            <div class="content" style="min-height: 280px">
+                                <small>${post.ngayTao}</small>
+                                <h5>${post.tieuDe}</h5>
+                                <p>${post.moTa}</p>
+                            </div>
+                          </article>
+                        </div>
+                        `
+              }).join('')}
+              ${ele.posts.length > 5?`
+              <div class="col-12 d-flex justify-content-center">
+                ${i===6?`
+                <button type="button" class="btn btn-primary" onclick="renderPosts(${ele.posts.length})">Xem thêm</button>
+                `:`
+                <button type="button" class="btn btn-primary" onclick="renderPosts(6)">Thu gọn</button>
+                `}
+              </div>
+              `:``}
             </div>
           </div>
         </section>

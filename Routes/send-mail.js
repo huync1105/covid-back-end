@@ -13,8 +13,8 @@ router.post('/', (req, res) => {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'huytest1105@gmail.com',
-      pass: '64719199@huy'
+      user: 'userdemo1011@gmail.com',
+      pass: '@covid123'
     }
   });
   let content = `
@@ -28,8 +28,8 @@ router.post('/', (req, res) => {
     </div>
   `
   let mailOptions = {
-    from: 'huytest1105@gmail.com',
-    to: 'huync1105@gmail.com',
+    from: 'userdemo1011@gmail.com',
+    to: 'covidinformation1011@gmail.com',
     subject: 'Sending Email using Node.js',
     html: content,
   };
