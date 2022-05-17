@@ -130,7 +130,10 @@ function renderPostContent(post) {
   let data = `
   <h3 class="mb-4">${category}</h3>
   <img src="${post.anhBia}" class="img-fluid" alt="${post.anhBia}">
-  
+  <div class="mt-3">
+    <button type="button" onclick="textToSpeech('play')" class="btn btn-primary play-btn me-2">Phát</button>
+    <button type="button" onclick="textToSpeech('stop')" class="btn btn-danger">Dừng</button>
+  </div>
   <p></p>
     <h3>${post.tieuDe}</h3>
     ${post.noiDungHTML}
@@ -203,4 +206,25 @@ function seeDetail(id) {
 
 function closeSearch() {
   searchResult.style.display = 'none';
+}
+
+function textToSpeech(request) {
+  // let text = post.noiDungText
+  // let msg = new SpeechSynthesisUtterance(text);
+  // let voices = window.speechSynthesis.getVoices();
+  // msg.voice = voices[0];
+  // msg.lang = 'th-TH'
+  // if (request==='play') {
+  //   window.speechSynthesis.speak(msg);
+  // } else {
+  //   window.speechSynthesis.cancel();
+  // }
+  let u = new SpeechSynthesisUtterance();
+  u.text = post.noiDungText;
+  u.lang = 'vi-VN';
+  if (request==='play') {
+    speechSynthesis.speak(u)
+  } else {
+    speechSynthesis.cancel(u)
+  }
 }

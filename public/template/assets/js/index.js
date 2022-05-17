@@ -137,7 +137,7 @@ function bindDataToTable(posts) {
       <td> ${post.tieuDe} </td>
       <td> ${post.ngayTao} </td>
       <td>
-        ${post.daDuyet?`<div class="badge badge-outline-success">Được duyệt</div>`:`<div class="badge badge-outline-warning">Đang duyệt</div>`}
+        ${post.daDuyet?`<div class="badge badge-outline-success">Được duyệt</div>`:`<Chờ class="badge badge-outline-warning">Chờ được duyệt</div>`}
       </td>
       <td>
         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>

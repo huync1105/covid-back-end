@@ -88,7 +88,7 @@ function renderPost(post) {
     </section>
   `
   document.querySelector('.post-content').innerHTML = data;
-  document.querySelector('.status').innerHTML = post.daDuyet ? `<div class="badge badge-outline-success">Được duyệt</div>` : `<div class="badge badge-outline-warning">Đang duyệt</div>`
+  document.querySelector('.status').innerHTML = post.daDuyet ? `<div class="badge badge-outline-success">Được duyệt</div>` : `<div class="badge badge-outline-warning">Chờ được duyệt</div>`
 }
 
 function test() {

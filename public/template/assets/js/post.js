@@ -11,7 +11,7 @@ let currentPostId = "";
 let categoryList = [];
 let statusList = [
   {label: 'Đã duyệt', value: true},
-  {label: 'Đang duyệt', value: false},
+  {label: 'Chờ được duyệt', value: false},
 ]
 
 window.addEventListener('DOMContentLoaded', () => {
