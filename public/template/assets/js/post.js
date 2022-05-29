@@ -93,14 +93,18 @@ function bindCategoryDropDown() {
     `
   })
   let data2 = statusList.map(ele => {
-    return `
-      <option value=${ele.value}>${ele.label}</option>
+    if (user.phanQuyen!=='PER01') {
+      return `
+      <option value=${ele.value} disabled>${ele.label}</option>
     `
+    } else {
+      return `
+        <option value=${ele.value}>${ele.label}</option>
+      `
+    }
   })
   document.querySelector('#post-category').innerHTML = data;
-  document.querySelector('#post-accepted').innerHTML = user.phanQuyen!=='PER01'?`
-    <option value="false">Đang duyệt</option>
-  `:data2;
+  document.querySelector('#post-accepted').innerHTML = data2;
 }
 
 // get post by id

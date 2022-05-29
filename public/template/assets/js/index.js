@@ -152,8 +152,8 @@ function bindDataToTable(posts) {
               <p class="preview-subject ellipsis mb-1 text-small">Xem trước</p>
             </div>
           </a>
+          ${((post.users[0].phanQuyen === currentUser.phanQuyen && post.users[0].email === currentUser.email) || currentUser.phanQuyen === 'PER01' || currentUser.phanQuyen === 'PER02')?`
           <div class="dropdown-divider"></div>
-          ${post.users[0].phanQuyen === currentUser.phanQuyen || currentUser.phanQuyen === 'PER01' || currentUser.phanQuyen === 'PER02'?`
           <a href="../template/pages/forms/post.html" class="dropdown-item preview-item" id="test-dropdown" onclick="createPost('${post._id}')">
             <div class="preview-thumbnail">
               <div class="preview-icon">
@@ -163,10 +163,10 @@ function bindDataToTable(posts) {
             <div class="preview-item-content">
               <p class="preview-subject ellipsis mb-1 text-small">Chỉnh sửa</p>
             </div>
-          </a>
-          `:''}
-          <div class="dropdown-divider"></div>
-          ${post.users[0].phanQuyen === currentUser.phanQuyen || currentUser.phanQuyen === 'PER01' || currentUser.phanQuyen === 'PER02'?`
+            </a>
+            `:''}
+            ${(post.users[0].phanQuyen === currentUser.phanQuyen && post.users[0].email === currentUser.email) || currentUser.phanQuyen === 'PER01' || currentUser.phanQuyen === 'PER02'?`
+            <div class="dropdown-divider"></div>
           <button class="dropdown-item preview-item" id="delete-post" onclick="deletePost('${post._id}')">
             <div class="preview-thumbnail">
               <div class="preview-icon">

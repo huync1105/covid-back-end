@@ -213,15 +213,16 @@ function textToSpeech(request) {
   // let msg = new SpeechSynthesisUtterance(text);
   // let voices = window.speechSynthesis.getVoices();
   // msg.voice = voices[0];
-  // msg.lang = 'th-TH'
+  // msg.lang = 'vi-VN'
   // if (request==='play') {
   //   window.speechSynthesis.speak(msg);
   // } else {
   //   window.speechSynthesis.cancel();
   // }
-  let u = new SpeechSynthesisUtterance();
+  var u = new SpeechSynthesisUtterance;
   u.text = post.noiDungText;
   u.lang = 'vi-VN';
+  console.log("u", u);
   if (request==='play') {
     speechSynthesis.speak(u)
   } else {
