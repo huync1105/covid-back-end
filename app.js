@@ -30,7 +30,10 @@ const commentRouter = require('./Routes/comments');
 app.use('/comments', commentRouter);
 
 const emailRouter = require('./Routes/send-mail');
-app.use('/sendemail', emailRouter)
+app.use('/sendemail', emailRouter);
+
+const cuscomRouter = require('./Routes/cuscoms');
+app.use('/cuscom', cuscomRouter);
 
 app.use('/admin', express.static(path.join(__dirname, 'public/Login/login.html')));
 

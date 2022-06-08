@@ -2,9 +2,12 @@ const accordion = document.querySelector('.accordion');
 const postContent = document.querySelector('.post-content');
 const searchResult = document.querySelector('.search-result');
 const searchInput = document.querySelector('#search-post');
+const commentInput = document.querySelector('#comment-input');
+const commentBtn = document.querySelector('#comment-btn');
 let posts = [];
 let subCategories = [];
 let post = {};
+let cuscoms = [];
 
 window.addEventListener('DOMContentLoaded', () => {
   loadData();
@@ -26,13 +29,19 @@ function loadData() {
           post = res;
           // console.log("post", post);
           renderPostContent(post);
+          getCuscoms()
+            .then(res => {
+              // console.log("res", res);
+              cuscoms = res;
+              renderCommments(cuscoms);
+            })
         })
     })
 }
 
 // get posts
 async function getPostsData() {
-  let postAPI = window.location.origin  +  '/posts';
+  let postAPI = window.location.origin + '/posts';
   let request = {
     method: 'GET',
     mode: 'cors',
@@ -50,7 +59,7 @@ async function getPostsData() {
 }
 
 async function getCategoryList() {
-  let API = window.location.origin  +  '/subcategories';
+  let API = window.location.origin + '/subcategories';
   let request = {
     method: 'GET',
     mode: 'cors',
@@ -81,12 +90,12 @@ function renderAccordion(subCategories) {
             <div class="accordion-body">
               <div class="list-group">
                 ${ele.posts.map(post => {
-                  if (post.daDuyet) {
-                    return `
+        if (post.daDuyet) {
+          return `
                       <a href="" class="list-group-item list-group-item-action" onclick="changePage('${post._id}')">${post.tieuDe}</a>
                     `
-                  }
-                }).join('')}
+        }
+      }).join('')}
               </div>
             </div>
           </div>
@@ -106,7 +115,7 @@ function changePage(id) {
 async function getPostData(id) {
   // let currentPostId = localStorage.postId;
   // console.log(currentPostId);
-  let userAPI = window.location.origin  +  `/posts/${id}`;
+  let userAPI = window.location.origin + `/posts/${id}`;
   let request = {
     method: 'GET',
     mode: 'cors',
@@ -215,9 +224,94 @@ function textToSpeech(request) {
   u.text = post.noiDungText;
   u.lang = 'vi-VN';
   console.log("u", u);
-  if (request==='play') {
+  if (request === 'play') {
     speechSynthesis.speak(u)
   } else {
     speechSynthesis.cancel(u)
   }
 }
+
+// render comments
+async function getCuscoms() {
+  let API = window.location.origin + '/cuscom';
+  let request = {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify()
+  }
+  const response = await fetch(API, request);
+  return response.json();
+}
+
+// add comments
+async function addComments(data) {
+  let postAPI = window.location.origin + `/cuscom`;
+  let request = {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data)
+  }
+  const response = await fetch(postAPI, request);
+  return response.json();
+}
+
+function renderCommments() {
+  let data = cuscoms.map(com => {
+    return `
+      <div class="comment d-flex" style="width: 100%">
+      ${com.idBaiViet === post._id ? `
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFMA-Ix5gnZzUHhjfBh2wKj1z3m0lLoJU4oqaA9IcAAcCZPrszSgnb4ANcQAOdnBv9Svk&usqp=CAU" style="width:40px;height: 40px; border-radius: 100%; padding: 0" alt="...">
+        <div class="comment-content ms-4" style="max-width: 90%">
+          <p class="m-0"><b>Ẩn danh</b> -  <span style="color: #ccc">${com.ngayTao}</span></p>
+          <p>${com.noiDung}</p>
+        </div>
+          `: ``}
+      </div>
+    `
+  }).join('');
+  document.querySelector('.comments-container').innerHTML = data;
+}
+
+function addZero(i) {
+  if (i < 10) { i = "0" + i }
+  return i;
+}
+
+commentBtn.addEventListener('click', () => {
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  const d = new Date();
+  let h = addZero(d.getHours());
+  let m = addZero(d.getMinutes());
+  let s = addZero(d.getSeconds());
+  let time = h + ":" + m + ":" + s;
+  let data = {
+    idBaiViet: post._id,
+    noiDung: commentInput.value,
+    ngayTao: `${day}/${month}/${year} lúc ${time}`,
+  }
+  let darkWords = ['đù má', 'vãi'];
+  if (darkWords.some(v => data.noiDung.includes(v))) {
+    alert('Nói tục là không văn minh')
+  } else {
+    // console.log(data);
+    addComments(data);
+    loadData()
+  }
+})
