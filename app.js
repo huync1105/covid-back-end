@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 const dbUrl = 'mongodb://localhost:27017/covid';
-// const dbUrl = 'mongodb+srv://huync1105:64719199%40huy@cluster0.t2ebu.mongodb.net/covid-news?retryWrites=true&w=majority';
+// const dbUrl = 'mongodb+srv://1105:64719199%40huy@cluster0.t2ebu.mongodb.net/covid-news?retryWrites=true&w=majority';
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 

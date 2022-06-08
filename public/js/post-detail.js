@@ -146,6 +146,7 @@ let synth = window.speechSynthesis;
 let toSpeak = new SpeechSynthesisUtterance(post.noiDungText);
 toSpeak.lang = 'vi-VI';
 
+// button text to speech
 function playSpeech() {
   toSpeak.rate = 2
   synth.speak(toSpeak);
@@ -208,17 +209,8 @@ function closeSearch() {
   searchResult.style.display = 'none';
 }
 
+// convert text to speech
 function textToSpeech(request) {
-  // let text = post.noiDungText
-  // let msg = new SpeechSynthesisUtterance(text);
-  // let voices = window.speechSynthesis.getVoices();
-  // msg.voice = voices[0];
-  // msg.lang = 'vi-VN'
-  // if (request==='play') {
-  //   window.speechSynthesis.speak(msg);
-  // } else {
-  //   window.speechSynthesis.cancel();
-  // }
   var u = new SpeechSynthesisUtterance;
   u.text = post.noiDungText;
   u.lang = 'vi-VN';

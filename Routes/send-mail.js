@@ -18,15 +18,30 @@ router.post('/', (req, res) => {
     }
   });
   let content = `
-    <div>
-      <h2>Thắc mắc của độc giả</h2>
-      <span><b>From:</b> ${data.ten} ${data.ho}</span>
-      <br>
-      <span><b>Email:</b> ${data.email}</span>
-      <br>
-      <span><b>Question:</b> ${data.cauHoi}</span>
+    <div style="padding: 20px 0;
+          display: flex;
+          width: 100%;
+          height: 100%;
+          background-color: #ffebeb;
+          color: #3d3d3d;
+          justify-content: center;
+          align-items: center">
+      <div style="margin: 0 auto;
+           width: 80%;
+           background-color: #fff;
+           padding: 20px;
+           border-radius: 16px;
+           box-shadow: 0 0 20px rgba(0, 0, 0, 0.4)">
+        <h2>Thắc mắc của độc giả</h2>
+        <div><b>Name:</b> ${data.ten} ${data.ho}</div>
+        <br>
+        <div><b>Email:</b> ${data.email}</div>
+        <br>
+        <div><b>Question:</b> ${data.cauHoi}</div>
+      </div>
     </div>
   `
+  
   let mailOptions = {
     from: 'userdemo1011@gmail.com',
     to: 'covidinformation1011@gmail.com',
