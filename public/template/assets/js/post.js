@@ -223,10 +223,10 @@ function validateData(data) {
     alert('Vui lòng nhập ngày tạo');
     return false;
   }
-  else if (!checkValue(data.daDuyet)) {
-    alert('Vui lòng nhập trạng thái');
-    return false;
-  }
+  // else if (!checkValue(data.daDuyet)) {
+  //   alert('Vui lòng nhập trạng thái');
+  //   return false;
+  // }
   else if (!checkValue(data.noiDung)) {
     alert('Vui lòng nhập nội dung');
     return false;

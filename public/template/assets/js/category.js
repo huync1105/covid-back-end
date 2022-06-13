@@ -32,7 +32,7 @@ function getUserData() {
     <p class="mb-0 d-none d-sm-block navbar-profile-name">${user.ten}</p>
     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
   `
-  document.getElementById('add-new-cat').style.visibility = user.phanQuyen === 'PER01'?'visible':'hidden';
+  document.getElementById('add-new-cat').style.visibility = (user.phanQuyen === 'PER01' || user.phanQuyen === 'PER02')?'visible':'hidden';
 }
 
 function getPermission(permission) {
