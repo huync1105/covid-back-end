@@ -306,7 +306,7 @@ commentBtn.addEventListener('click', () => {
     noiDung: commentInput.value,
     ngayTao: `${day}/${month}/${year} lúc ${time}`,
   }
-  let darkWords = ['đù má', 'vãi'];
+  let darkWords = ['đù','me','vãi','địt','chó','đụ','fuck'];
   if (darkWords.some(v => data.noiDung.includes(v))) {
     alert('Nói tục là không văn minh')
   } else {
